@@ -29,8 +29,8 @@ string visualizzadati(numcivica arr[],int dim ){
 		s+=arr[i].subalterno+"\t";
 		s+=arr[i].cap+"\t";
 		s+=arr[i].istat+"\t";
-		s+=to_string(arr[i].latitudine)+"\n";
-		s+=to_string(arr[i].longitudine)+"\n";
+		s+=to_string(arr[i].latitudine)+"\t";
+		s+=to_string(arr[i].longitudine)+"\t";
 		s+=to_string(arr[i].z.x)+"\t";
 		s+=to_string(arr[i].z.y)+"\t";
 	}
@@ -40,12 +40,12 @@ string visualizzadati(numcivica arr[],int dim ){
 
 // lettura riga per riga il file e per ogni riga estraggo i campi e li salvo nel campo giusto.
 void caricadati(numcivica arr[],string nome){
-ifstream leggi("dati.csv",ios::app);
+ifstream leggi(nome);
 if(leggi.is_open()){
 string riga;
 int i=0;
 getline(leggi,riga);
-while(i<900&&getline(leggi, arr[i].tipovia, ',')){
+while(i<100&&getline(leggi, arr[i].tipovia, ',')){
 
 getline(leggi, arr[i].nomevia, ',');
 getline(leggi, arr[i].numero, ',');
@@ -55,8 +55,10 @@ getline(leggi, arr[i].istat, ',');
 string temp;
 getline(leggi, temp, ','); arr[i].latitudine = stod(temp);
 getline(leggi, temp, ','); arr[i].longitudine = stod(temp);
-getline(leggi, temp, ','); arr[i].z.x = stod(temp);	
-getline(leggi, temp); arr[i].z.y = stod(temp);
+getline(leggi, temp); // "(45.692781113,9.644686683)"
+int pos = temp.find(',', 1); // trova la virgola in mezzo (parte da 1 per saltare il "(")
+arr[i].z.x = stod(temp.substr(2, pos - 2));       // salta "(  e prende fino alla virgola
+arr[i].z.y = stod(temp.substr(pos + 1, temp.size() - pos - 3)); // salta virgola e ")  finale
 i++;
 }
 leggi.close();
@@ -91,6 +93,6 @@ int main(int argc, char** argv)
 	numcivica dati[100];
 	int n=100;
 	caricadati(dati,"dati.csv");
-	visualizzadati(dati,n);
+	cout<<visualizzadati(dati,n);
 	return 0;
 }
