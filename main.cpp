@@ -12,11 +12,15 @@ int main(int argc, char** argv)
 		string numero;
 		string subalterno;
 		string cap;
-		int istat;
+		string istat;
 		double latitudine;
 		double longitudine;
-		string location;
+		location z;
 		
+	};
+	struct location{
+		string x;
+		string y;
 	};
 	numerazione x;
 	
