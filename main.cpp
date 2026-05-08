@@ -39,12 +39,25 @@ string visualizzadati(numcivica arr[],int dim ){
 }
 
 // lettura riga per riga il file e per ogni riga estraggo i campi e li salvo nel campo giusto.
-void caricadati(numcivica arr[100],string nome){
-ifstream leggi("dati.csv");
+void caricadati(numcivica arr[],string nome){
+ifstream leggi("dati.csv",ios::app);
 if(leggi.is_open()){
 string riga;
-while(getline(leggi,riga)){
-	
+int i=0;
+getline(leggi,riga);
+while(i<900&&getline(leggi, arr[i].tipovia, ',')){
+
+getline(leggi, arr[i].nomevia, ',');
+getline(leggi, arr[i].numero, ',');
+getline(leggi, arr[i].subalterno, ',');
+getline(leggi, arr[i].cap, ',');
+getline(leggi, arr[i].istat, ',');
+string temp;
+getline(leggi, temp, ','); arr[i].latitudine = stod(temp);
+getline(leggi, temp, ','); arr[i].longitudine = stod(temp);
+getline(leggi, temp, ','); arr[i].z.x = stod(temp);	
+getline(leggi, temp); arr[i].z.y = stod(temp);
+i++;
 }
 leggi.close();
 }
@@ -76,7 +89,8 @@ int main(int argc, char** argv)
 		string y;
 	};*/
 	numcivica dati[100];
-	
+	int n=100;
 	caricadati(dati,"dati.csv");
+	visualizzadati(dati,n);
 	return 0;
 }
