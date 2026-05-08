@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char** argv) 
 {
-	struct numerazione{
+	struct numerazionecivica{
 		string tipovia;
 		string nomevia;
 		string numero;
@@ -22,7 +22,8 @@ int main(int argc, char** argv)
 		string x;
 		string y;
 	};
-	numerazione x;
+	numerazionecivica dati[];
+	
 	
 	return 0;
 }
