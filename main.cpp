@@ -64,35 +64,98 @@ i++;
 leggi.close();
 }
 else{
-	cout<<"file non è stato aperto correttamente"<<endl;
+	cout<<"file non e' stato aperto correttamente"<<endl;
 }
 }
 
 
 
+
+
+
+
+int ricerca(string y,int dim,numcivica arr[],numcivica temp[]){
+    int contatore=0;
+	for(int i=0;i<dim;i++){
+	if(arr[i].nomevia==y){
+	temp[contatore]=arr[i];
+	contatore++;	
+	}
+		
+	}
+	
+	return contatore;
+}
+
+void ordinancivico(numcivica arr[],int dim){
+	for(int i=0;i<dim;i++){
+		for(int j=0;j<dim-1;j++){
+			if(stoi(arr[j].numero)>stoi(arr[j+1].numero)){
+				string temp=arr[j].numero;
+				arr[j].numero=arr[j+1].numero;
+				arr[j+1].numero=temp;
+			}
+		}
+	}
+}
+
+//MAIN
 
 int main(int argc, char** argv) 
 {
-	/*
-	struct numerazionecivica{
-		string tipovia;
-		string nomevia;
-		string numero;
-		string subalterno;
-		string cap;
-		string istat;
-		double latitudine;
-		double longitudine;
-		location z;
-		
-	};
-	struct location{
-		string x;
-		string y;
-	};*/
+
+	string y;
 	numcivica dati[100];
 	int n=100;
+	int totncivico;
 	caricadati(dati,"dati.csv");
-	cout<<visualizzadati(dati,n);
-	return 0;
+	int scelta;
+	numcivica temp[100];
+	do{
+	cout<<"--------------------MENU'---------------------"<<endl;	
+	cout<<"0 - FINE PROGRAMMA"<<endl;
+	cout<<"1 - (R)Visualizzazione"<<endl;
+    cout<<"2 - RICERCA"<<endl;
+	//cout<<visualizzadati(dati,n);
+	
+	cout<<"Scegli cosa vuoi fare"<<endl;
+	cin>>scelta;
+	fflush(stdin);
+	
+	switch(scelta){
+		
+	//visualizza
+		
+		case 1: 
+		cout<<visualizzadati(dati,n);
+		break;
+	
+	
+	//ricerca
+	
+	case 2: cout<<"Inserisci la via di cui vuoi sapere i numeri civici"<<endl;
+	getline(cin,y);
+    totncivico=ricerca(y,n,dati,temp);
+   
+    if(totncivico==0){
+    	cout<<"Il nome della via da te inserito non e' presente nel file"<<endl;
+	}
+	else{
+		
+	cout<<"La via ha "<<totncivico<< " numero/i civico/i"<<endl;
+	ordinancivico(temp,totncivico);	
+	cout<<"Numero/i Civico/i della via "<<y<<" ordinati: "<<endl;
+	for(int i=0;i<totncivico;i++){
+		cout<<temp[i].numero<<endl;
+	}
+	}
+	//ordinancivico(temp,n);
+	
+	break;
+	
+	
+}
+}
+while(scelta!=0);
+
 }
