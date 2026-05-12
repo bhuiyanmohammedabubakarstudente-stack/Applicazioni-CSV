@@ -85,6 +85,7 @@ void ordinancivico(numcivica arr[],int dim){
 
 
 string ricerca(string y,numcivica arr[],int dim){
+	
 	for(int i=0;i<dim;i++){
 	if(arr[i].nomevia==y){
 		//ordinancivico(arr,dim);
@@ -119,10 +120,13 @@ int main(int argc, char** argv)
 	numcivica dati[100];
 	int n=100;
 	caricadati(dati,"dati.csv");
+	int scelta;
+	do{
+	
 	cout<<"1 - (R)Visualizzazione"<<endl;
     cout<<"2 - RICERCA"<<endl;
 	//cout<<visualizzadati(dati,n);
-	int scelta;
+	
 	cout<<"Scegli cosa vuoi fare"<<endl;
 	cin>>scelta;
 	fflush(stdin);
@@ -138,8 +142,11 @@ int main(int argc, char** argv)
 	case 2: cout<<"Inserisci la via di cui vuoi sapere i numeri civici"<<endl;
 	cin>>y;
 	ordinancivico(dati,n);
+	
 	break;
-	return 0;
+	
 	
 }
+}
+while(scelta!=0);
 }
