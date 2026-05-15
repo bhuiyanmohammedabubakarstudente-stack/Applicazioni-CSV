@@ -7,6 +7,7 @@ using namespace std;
 		double x;
 		double y;
 	};
+	
 	struct numcivica{
 		string tipovia;
 		string nomevia;
@@ -19,6 +20,8 @@ using namespace std;
 		location z;
 		
 	};
+	
+	
 	
 string visualizzadati(numcivica arr[],int dim ){
 	string s;
@@ -99,12 +102,40 @@ void ordinancivico(numcivica arr[],int dim){
 	}
 }
 
+  
+                                                                //ISTAT 
+                                                                
+struct temporary{
+	string istat;
+	int contatore;
+	};
+int istat(numcivica arr[],temporary x[],int dim/*,string y*/){
+	x.istat=arr[0].istat;
+	int cont=0;
+//	ofstream scrivi("y",ios::app);
+	//if(scrivi.is_open()){
+	for(int i=1;i<dim;i++){
+		
+	if(arr[i].istat==arr[i+1].istat&&arr[i].istat==x.istat){
+			
+	x.contatore++;
+		}
+		else{
+			x.istat=arr[i].istat;
+			//x.contatore++;
+		}
+	}
+	//}
+	return x.contatore;
+}
+
 //MAIN
 
 int main(int argc, char** argv) 
 {
 
 	string y;
+	temporary y1;
 	numcivica dati[100];
 	int n=100;
 	int totncivico;
@@ -116,6 +147,7 @@ int main(int argc, char** argv)
 	cout<<"0 - FINE PROGRAMMA"<<endl;
 	cout<<"1 - (R)Visualizzazione"<<endl;
     cout<<"2 - RICERCA"<<endl;
+    cout<<"3 - FILE HTML"<<endl;
 	//cout<<visualizzadati(dati,n);
 	
 	cout<<"Scegli cosa vuoi fare"<<endl;
@@ -153,7 +185,12 @@ int main(int argc, char** argv)
 	
 	break;
 	
+	//CaricaHTML
+	case 3: 
+    cout<<	istat(dati,y1,n)<<endl;
+    
 	
+	break;
 }
 }
 while(scelta!=0);
