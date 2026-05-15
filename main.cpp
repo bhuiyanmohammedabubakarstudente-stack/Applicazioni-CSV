@@ -109,33 +109,83 @@ struct temporary{
 	string istat;
 	int contatore;
 	};
+	
 int istat(numcivica arr[],temporary x[],int dim/*,string y*/){
-	x.istat=arr[0].istat;
+	x
+	[0].istat=arr[0].istat;
 	int cont=0;
-//	ofstream scrivi("y",ios::app);
-	//if(scrivi.is_open()){
-	for(int i=1;i<dim;i++){
-		
-	if(arr[i].istat==arr[i+1].istat&&arr[i].istat==x.istat){
+
+	for(int i=0;i<dim;i++){
+	bool trovato=false;
+	for(int j=0;j<cont;j++){
+	
+	if(x[j].istat==arr[i].istat){
 			
-	x.contatore++;
+	x[j].contatore++;
+	trovato=true;
+	break;
 		}
-		else{
-			x.istat=arr[i].istat;
-			//x.contatore++;
 		}
+		if(trovato==false){
+			x[cont].istat=arr[i].istat;
+			x[cont].contatore=1;
+			cont++;
+		}
+		
 	}
 	//}
-	return x.contatore;
+return cont;
 }
 
+void HTML(temporary x[], int numDistinti, string nomeFile) {
+    ofstream scrivi(nomeFile);
+    if (scrivi.is_open()) {
+        // Intestazione HTML
+        scrivi << "<!DOCTYPE html>\n";
+        scrivi << "<html lang='it'>\n";
+        scrivi << "<head>\n";
+        scrivi << "  <meta charset='UTF-8'>\n";
+        scrivi << "  <title>Tabella ISTAT</title>\n";
+        scrivi << "  <style>\n";
+        scrivi << "    body { font-family: Arial, sans-serif; margin: 40px; }\n";
+        scrivi << "    h2 { color: #333; }\n";
+        scrivi << "    table { border-collapse: collapse; width: 400px; }\n";
+        scrivi << "    th { background-color: #4CAF50; color: white; padding: 10px; text-align: left; }\n";
+        scrivi << "    td { border: 1px solid #ddd; padding: 8px; }\n";
+        scrivi << "    tr:nth-child(even) { background-color: #f2f2f2; }\n";
+        scrivi << "    tr:hover { background-color: #ddd; }\n";
+        scrivi << "  </style>\n";
+        scrivi << "</head>\n";
+        scrivi << "<body>\n";
+        scrivi << "  <h2>Conteggio record per sezione ISTAT</h2>\n";
+        scrivi << "  <table>\n";
+        scrivi << "    <tr><th>Sezione ISTAT</th><th>Numero di record</th></tr>\n";
+
+        // Righe dati
+        for (int i = 0; i < numDistinti; i++) {
+            scrivi << "    <tr>";
+            scrivi << "<td>" << x[i].istat << "</td>";
+            scrivi << "<td>" << x[i].contatore << "</td>";
+            scrivi << "</tr>\n";
+        }
+
+        scrivi << "  </table>\n";
+        scrivi << "</body>\n";
+        scrivi << "</html>\n";
+
+        scrivi.close();
+        cout << "File HTML creato correttamente: " << nomeFile << endl;
+    } else {
+        cout << "Errore: impossibile aprire il file " << nomeFile << endl;
+    }
+}
 //MAIN
 
 int main(int argc, char** argv) 
 {
 
 	string y;
-	temporary y1;
+	temporary y1[100];
 	numcivica dati[100];
 	int n=100;
 	int totncivico;
@@ -187,9 +237,10 @@ int main(int argc, char** argv)
 	
 	//CaricaHTML
 	case 3: 
-    cout<<	istat(dati,y1,n)<<endl;
-    
-	
+   
+   int n1= istat(dati,y1,n);
+    HTML(y1, n1, "tabella_istat.html");
+
 	break;
 }
 }
